@@ -3,7 +3,10 @@ package br.ucdb.pos.engenhariasoftware.testesoftware.automacao.selenium.webdrive
 import br.ucdb.pos.engenhariasoftware.testesoftware.automacao.selenium.webdriver.pageobject.LancamentoPage;
 import br.ucdb.pos.engenhariasoftware.testesoftware.automacao.selenium.webdriver.pageobject.ListaLancamentosPage;
 import br.ucdb.pos.engenhariasoftware.testesoftware.automacao.selenium.webdriver.pageobject.TipoLancamento;
+import br.ucdb.pos.engenhariasoftware.testesoftware.automacao.selenium.webdriver.pageobject.Categoria;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -42,9 +45,16 @@ public class LancamentoTest {
         DateTimeFormatter formatoLancamento = DateTimeFormatter.ofPattern("dd.MM.yy");
         final String descricaoLancamento = "Lançando saída automatizada " + dataHora.format(formatoLancamento);
         final BigDecimal valor = getValorLancamento();
-        lancamentoPage.cria(descricaoLancamento, valor, dataHora, TipoLancamento.SAIDA);
+        lancamentoPage.cria(descricaoLancamento, valor, dataHora, TipoLancamento.SAIDA, Categoria.OUTROS);
 
-        assertTrue(listaLancamentosPage.existeLancamento(descricaoLancamento, valor, dataHora, TipoLancamento.SAIDA));
+        assertTrue(listaLancamentosPage.existeLancamento(descricaoLancamento, valor, dataHora, TipoLancamento.SAIDA, Categoria.OUTROS));
+    }
+
+    public void acessaRelatorio(){
+
+        WebElement relatorio = driver.findElement(By.xpath("//*[@id=\'form-busca\']/div[1]/div[2]/div[4]/a/i"));
+
+        relatorio.click();
     }
 
     @AfterClass
